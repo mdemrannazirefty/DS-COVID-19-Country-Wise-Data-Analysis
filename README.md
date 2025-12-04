@@ -124,11 +124,12 @@ source("scripts/covid_analysis.R")
 🧑‍💻 Author
 
 Md. Emran Nazir Efty
+
 📧 Email: mdemrannazirefty@gmail.com
 
-🌐 Portfolio: [linkedin](https://www.linkedin.com/in/mdemrannazirefty/)]
+🌐 Portfolio: [linkedin](https://www.linkedin.com/in/mdemrannazirefty/)
 
-🌐 GitHub: [mdemrannazirefty](https://github.com/mdemrannazirefty)]
+🌐 GitHub: [mdemrannazirefty](https://github.com/mdemrannazirefty)
 
 📍 Dhaka, Bangladesh
 
