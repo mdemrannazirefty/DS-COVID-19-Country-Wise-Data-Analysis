@@ -125,8 +125,11 @@ source("scripts/covid_analysis.R")
 
 Md. Emran Nazir Efty
 📧 Email: mdemrannazirefty@gmail.com
-🌐 Portfolio: [https://linktr.ee/globalfabricapparel](https://www.linkedin.com/in/mdemrannazirefty/)
-🌐 GitHub: https://github.com/mdemrannazirefty
+
+🌐 Portfolio: [linkedin](https://www.linkedin.com/in/mdemrannazirefty/)]
+
+🌐 GitHub: [mdemrannazirefty](https://github.com/mdemrannazirefty)]
+
 📍 Dhaka, Bangladesh
 
 📜 License
