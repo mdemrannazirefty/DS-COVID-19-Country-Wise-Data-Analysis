@@ -1,0 +1,238 @@
+install.packages("dplyr")
+install.packages("ggplot2")
+install.packages("naniar")
+
+library(dplyr)
+library(ggplot2)
+library(naniar)
+
+
+mydata<- read.csv("E:/Aiub/11th Semister/INTRODUCTION TO DATA SCIENCE [D]/Mid Project/country_wise_latest_update.csv",header = TRUE,sep = ",")
+mydata
+
+head(mydata)
+str(mydata)
+summary(mydata)
+
+data_cleaned <-mydata
+data_cleaned$Country.Region[data_cleaned$Country.Region == ""] <- NA
+data_cleaned
+
+missing_values <- colSums(is.na(data_cleaned))
+missing_values
+if(any(missing_values > 0)) {
+  print(missing_values[missing_values > 0])
+} else {
+  cat("No missing values found in the dataset.\n\n")
+}
+
+
+median_replace<-data_cleaned
+median_replace[is.na(median_replace$Deaths), ]
+deaths_median <- median(median_replace$Deaths, na.rm = TRUE)
+print(deaths_median)
+
+median_replace$Deaths[is.na(median_replace$Deaths)] <- deaths_median
+median_replace[is.na(median_replace$Deaths), ]
+median_replace
+
+
+mean_add<-median_replace
+mean_add[is.na(mean_add$Confirmed), ]
+
+Confirmed_mean <- mean(mean_add$Confirmed, na.rm = TRUE)
+print(Confirmed_mean)
+mean_add$Confirmed[is.na(mean_add$Confirmed)] <- Confirmed_mean
+mean_add[is.na(mean_add$Confirmed), ]
+mean_add
+
+
+mode_add<-mean_add
+mode_add[is.na(mode_add$WHO.Region),]
+freq_table <- table(mode_add$WHO.Region)
+mode<-names(freq_table)[which.max(freq_table)]
+print(mode)
+
+mode_add$WHO.Region[is.na(mode_add$WHO.Region)] <- mode
+mode_add[is.na(mode_add$WHO.Region),]
+mode_add
+
+
+Remove_missing_row<-mode_add
+Remove_missing_row<-na.omit(Remove_missing_row)
+Remove_missing_row
+
+
+duplicated_row <- Remove_missing_row
+duplicate_rows <- sum(duplicated(duplicated_row))
+if(duplicate_rows > 0) {
+  cat("Found", duplicate_rows, "duplicate rows. Removing them.\n")
+  Remove_missing_row <- Remove_missing_row[!duplicated(Remove_missing_row), ]
+} else {
+  cat("No duplicate rows found.\n\n")
+}
+nrow(duplicated_row)
+
+gg_miss_var(mydata)
+vis_miss(mydata) 
+
+
+outlier_data <- duplicated_row
+summary(outlier_data$Deaths)
+
+boxplot(outlier_data$Deaths, main = "Boxplot of Deaths", col = "Black")
+outlier_data$Deaths[outlier_data$Deaths < 0] <- 0
+outlier_data$Deaths[is.na(outlier_data$Deaths)] <- median(outlier_data$Deaths, na.rm = TRUE)
+
+Q1_Deaths <- quantile(outlier_data$Deaths, 0.25)
+Q3_Deaths <- quantile(outlier_data$Deaths, 0.75)
+IQR_Deaths <- Q3_Deaths - Q1_Deaths
+
+lower_bound_Deaths <- Q1_Deaths - 1.5 * IQR_Deaths
+upper_bound_Deaths <- Q3_Deaths + 1.5 * IQR_Deaths
+
+outlier_data$Deaths[outlier_data$Deaths < lower_bound_Deaths | 
+                      outlier_data$Deaths > upper_bound_Deaths] <- median(outlier_data$Deaths)
+summary(outlier_data$Deaths)
+
+
+
+NumToCata <- duplicated_row
+NumToCata$Deaths...100.Cases <- ifelse(
+  NumToCata$Deaths...100.Cases >= 0 & NumToCata$Deaths...100.Cases <= 4, "Low",
+  ifelse(
+    NumToCata$Deaths...100.Cases >= 5 & NumToCata$Deaths...100.Cases <= 9, "Medium",
+    "High"
+  )
+)
+NumToCata$Deaths...100.Cases
+
+
+CataToNum <- NumToCata
+CataToNum$Deaths_numeric <- ifelse(
+  CataToNum$Deaths...100.Cases == "Low", 1,
+  ifelse(
+    CataToNum$Deaths...100.Cases == "Medium", 2,
+    ifelse(
+      CataToNum$Deaths...100.Cases == "High", 3,
+      NA_real_
+    )
+  )
+)
+CataToNum$Deaths_numeric
+
+
+normalized_data <- outlier_data %>%
+  mutate(
+    Confirmed_norm = (Confirmed - min(Confirmed)) / (max(Confirmed) - min(Confirmed)),
+    Deaths_norm    = (Deaths    - min(Deaths))    / (max(Deaths)    - min(Deaths)),
+    Recovered_norm = (Recovered - min(Recovered)) / (max(Recovered) - min(Recovered)),
+    Active_norm    = (Active    - min(Active))    / (max(Active)    - min(Active))
+  )
+head(normalized_data)
+
+
+filtering <- duplicated_row
+check <- filtering[filtering$Deaths > 0 | filtering$Deaths < 1000000, ]
+print(check)
+filtering$Deaths[filtering$Deaths < 0] <- 0
+head(filtering)
+
+
+inv_data <- duplicated_row
+valid_regions <- c("Americas", "Europe", "Africa", 
+                   "Western Pacific", "Eastern Mediterranean", 
+                   "South-East Asia")
+
+invalid_categories <- inv_data$WHO.Region[!(inv_data$WHO.Region %in% valid_regions)]
+
+cat("\nInvalid categorical values in WHO.Region\n")
+print(invalid_categories)
+
+freq_table_region <- table(inv_data$WHO.Region)
+mode_region <- names(freq_table_region)[which.max(freq_table_region)]
+
+inv_data$WHO.Region[!(inv_data$WHO.Region %in% valid_regions)] <- mode_region
+inv_data$WHO.Region
+
+
+set.seed(123) 
+min_n <- min(table(CataToNum$Deaths...100.Cases))
+balanced_data <- CataToNum %>%
+  group_by(Deaths...100.Cases) %>%
+  sample_n(size = min_n) %>%
+  ungroup()
+table(balanced_data$Deaths...100.Cases)
+prop.table(table(balanced_data$Deaths...100.Cases))
+
+
+
+set.seed(123) 
+n <- nrow(duplicated_row)
+
+train_index <- sample(1:n, size = 0.8 * n)
+train_data <- duplicated_row[train_index, ]
+test_data  <- duplicated_row[-train_index, ]
+
+cat("Training rows:", nrow(train_data), "\n")
+cat("Testing rows:", nrow(test_data), "\n")
+
+
+numeric_vars <- c("Confirmed", "Deaths", "Recovered", "Active")
+descriptive_stats <- balanced_data %>%
+  group_by(Deaths...100.Cases) %>%
+  summarise(
+    Confirmed_mean = mean(Confirmed, na.rm = TRUE),
+    Confirmed_sd   = sd(Confirmed, na.rm = TRUE),
+    Deaths_mean    = mean(Deaths, na.rm = TRUE),
+    Deaths_sd      = sd(Deaths, na.rm = TRUE),
+    Recovered_mean = mean(Recovered, na.rm = TRUE),
+    Recovered_sd   = sd(Recovered, na.rm = TRUE),
+    Active_mean    = mean(Active, na.rm = TRUE),
+    Active_sd      = sd(Active, na.rm = TRUE),
+    Count = n()
+  )
+print(descriptive_stats)
+
+
+mean_summary <- balanced_data %>%
+  group_by(Deaths...100.Cases) %>%
+  summarise(
+    Confirmed_mean = mean(Confirmed, na.rm = TRUE),
+    Deaths_mean    = mean(Deaths, na.rm = TRUE),
+    Recovered_mean = mean(Recovered, na.rm = TRUE),
+    Active_mean    = mean(Active, na.rm = TRUE),
+    Count = n()
+  )
+print(mean_summary)
+
+
+variability_deaths <- balanced_data %>%
+  group_by(Deaths...100.Cases) %>%
+  summarise(
+    Min_Deaths   = min(Deaths, na.rm = TRUE),
+    Max_Deaths   = max(Deaths, na.rm = TRUE),
+    Range_Deaths = Max_Deaths - Min_Deaths,
+    IQR_Deaths   = IQR(Deaths, na.rm = TRUE),
+    Var_Deaths   = var(Deaths, na.rm = TRUE),
+    SD_Deaths    = sd(Deaths, na.rm = TRUE),
+    Count        = n()
+  )
+print(variability_deaths)
+
+
+data_plot <- duplicated_row   
+top20_deaths <- data_plot %>%
+  arrange(desc(Deaths)) %>%
+  slice(1:20)
+
+ggplot(top20_deaths, aes(x = reorder(Country.Region, Deaths), y = Deaths)) +
+  geom_col(fill = "red") +
+  coord_flip() +
+  labs(
+    title = "Top 20 Countries by COVID-19 Total Deaths",
+    x = "Country",
+    y = "Number of Deaths"
+  ) +
+  theme_minimal()
+
