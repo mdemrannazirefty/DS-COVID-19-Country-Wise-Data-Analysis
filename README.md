@@ -5,6 +5,8 @@ It covers the full workflow: cleaning, transforming, visualizing, and interpreti
 
 The dataset was sourced from Kaggle and includes key attributes such as confirmed cases, deaths, recoveries, active cases, weekly changes, WHO region, and mortality/recovery ratios.
 
+---
+
 # 📌 Project Goals
 
 - Clean and prepare real-world COVID-19 data
@@ -16,6 +18,9 @@ The dataset was sourced from Kaggle and includes key attributes such as confirme
 - Visualize trends using ggplot2
 - Compute descriptive and comparative statistics
 - Explore mortality patterns across countries
+
+
+---
 
 # 📊 Dataset Information
 
@@ -36,6 +41,8 @@ The dataset includes variables such as:
 - Confirmed last week, Weekly change
 - WHO Region
 
+---
+
 # 🧹 Data Cleaning Steps
 
 - Replaced empty strings
@@ -46,12 +53,17 @@ The dataset includes variables such as:
 - Repaired negative values
 - Treated outliers using the IQR method
 
+
+---
+
 # ⚙️ Feature Engineering
 
 - Converted mortality ratio to Low / Medium / High categories
 - Mapped categories back to numeric codes
 - Applied min–max normalization to main numeric variables
 - Balanced the dataset using undersampling
+
+---
 
 # 📈 Visualizations
 
@@ -61,6 +73,8 @@ The dataset includes variables such as:
 - Comparative statistics plots
 - Bar charts and summary graphics
 - These visuals help highlight which countries were hit hardest and how death rates differ across groups.
+
+---
 
 # 📐 Statistical Analysis
 
@@ -72,19 +86,26 @@ The dataset includes variables such as:
 - Strong positive correlation between confirmed cases and deaths
 - Regional variation in severity
 
+---
+
 ## How to Run the Project
 Install libraries
+```
 install.packages("dplyr")
 install.packages("ggplot2")
 install.packages("naniar")
-
+```
 ## Load dataset
+```
 mydata <- read.csv("data/country_wise_latest_update.csv", header = TRUE)
-
+```
 
 ## Run the analysis
+```
 source("scripts/covid_analysis.R")
+```
 
+---
 # 🧑‍💻 Author
 
 Md. Emran Nazir Efty
