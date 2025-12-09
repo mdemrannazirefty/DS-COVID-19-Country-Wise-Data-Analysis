@@ -116,8 +116,8 @@ source("scripts/covid_analysis.R")
 
 Md. Emran Nazir Efty
 
-📧 globalfabricapparel@gmail.com
+📧 mdemrannazirefty@gmail.com
 
-🌐 https://linktr.ee/globalfabricapparel
+🌐 https://www.linkedin.com/in/mdemrannazirefty
 
 📍 Dhaka, Bangladesh
