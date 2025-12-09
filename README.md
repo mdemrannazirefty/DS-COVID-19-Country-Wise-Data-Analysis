@@ -106,10 +106,17 @@ source("scripts/covid_analysis.R")
 ```
 
 ---
+
+# Result
+
+https://github.com/mdemrannazirefty/DS-COVID-19-Country-Wise-Data-Analysis/blob/51d99fff84f1d0e1d7e58302e6476405dba219e0/Result.png
+---
 # 🧑‍💻 Author
 
 Md. Emran Nazir Efty
-Student • Data Analyst • R Programmer
+
 📧 globalfabricapparel@gmail.com
+
 🌐 https://linktr.ee/globalfabricapparel
+
 📍 Dhaka, Bangladesh
