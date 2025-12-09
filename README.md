@@ -71,3 +71,24 @@ The dataset includes variables such as:
 - Countries with high mortality rates usually had much larger outbreaks
 - Strong positive correlation between confirmed cases and deaths
 - Regional variation in severity
+
+## How to Run the Project
+Install libraries
+install.packages("dplyr")
+install.packages("ggplot2")
+install.packages("naniar")
+
+## Load dataset
+mydata <- read.csv("data/country_wise_latest_update.csv", header = TRUE)
+
+
+## Run the analysis
+source("scripts/covid_analysis.R")
+
+# 🧑‍💻 Author
+
+Md. Emran Nazir Efty
+Student • Data Analyst • R Programmer
+📧 globalfabricapparel@gmail.com
+🌐 https://linktr.ee/globalfabricapparel
+📍 Dhaka, Bangladesh
