@@ -17,7 +17,7 @@ The dataset was sourced from Kaggle and includes key attributes such as confirme
 - Compute descriptive and comparative statistics
 - Explore mortality patterns across countries
 
-  # 📊 Dataset Information
+# 📊 Dataset Information
 
 Dataset Name: COVID-19 Dataset
 Rows: 187
@@ -26,48 +26,48 @@ Source: Kaggle
 🔗 https://www.kaggle.com/datasets/imdevskp/corona-virus-report
 
 The dataset includes variables such as:
-Country / Region
-Confirmed
-Deaths
-Recovered
-Active
-New Cases / New Deaths
-Deaths per 100 Cases
-Confirmed last week, Weekly change
-WHO Region
+- Country / Region
+- Confirmed
+- Deaths
+- Recovered
+- Active
+- New Cases / New Deaths
+- Deaths per 100 Cases
+- Confirmed last week, Weekly change
+- WHO Region
 
 # 🧹 Data Cleaning Steps
 
-Replaced empty strings
-Identified and fixed missing values
-Removed incomplete rows
-Checked for duplicates
-Converted invalid region values
-Repaired negative values
-Treated outliers using the IQR method
+- Replaced empty strings
+- Identified and fixed missing values
+- Removed incomplete rows
+- Checked for duplicates
+- Converted invalid region values
+- Repaired negative values
+- Treated outliers using the IQR method
 
 # ⚙️ Feature Engineering
 
-Converted mortality ratio to Low / Medium / High categories
-Mapped categories back to numeric codes
-Applied min–max normalization to main numeric variables
-Balanced the dataset using undersampling
+- Converted mortality ratio to Low / Medium / High categories
+- Mapped categories back to numeric codes
+- Applied min–max normalization to main numeric variables
+- Balanced the dataset using undersampling
 
-#📈 Visualizations
+# 📈 Visualizations
 
-Missing value map
-Boxplot for outlier detection
-Top 20 countries by total deaths
-Comparative statistics plots
-Bar charts and summary graphics
-These visuals help highlight which countries were hit hardest and how death rates differ across groups.
+- Missing value map
+- Boxplot for outlier detection
+- Top 20 countries by total deaths
+- Comparative statistics plots
+- Bar charts and summary graphics
+- These visuals help highlight which countries were hit hardest and how death rates differ across groups.
 
 # 📐 Statistical Analysis
 
-Means and standard deviation by category
-Variability metrics (range, IQR, variance, SD)
-Group-wise comparison of confirmed, recovered, active, and death cases
-The analysis helps show patterns like:
-Countries with high mortality rates usually had much larger outbreaks
-Strong positive correlation between confirmed cases and deaths
-Regional variation in severity
+- Means and standard deviation by category
+- Variability metrics (range, IQR, variance, SD)
+- Group-wise comparison of confirmed, recovered, active, and death cases
+- The analysis helps show patterns like:
+- Countries with high mortality rates usually had much larger outbreaks
+- Strong positive correlation between confirmed cases and deaths
+- Regional variation in severity
