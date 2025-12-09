@@ -107,7 +107,7 @@ source("scripts/covid_analysis.R")
 
 ---
 
-# ## 📊 Result Overview
+# 📊 Result Overview
 
 ![COVID-19 Analysis Result](Result.png)
 
